@@ -5,22 +5,41 @@ import Tabs from "./components/Tabs";
 import Toolbars from "./components/Toolbars";
 import { Tree } from "./components/Tree";
 import { useAppSelector } from "./stores/hooks";
-import { audioExtensions, getExtensionFile, imageExtensions, videoExtensions } from "./utils/common";
+import {
+  audioExtensions,
+  getExtensionFile,
+  imageExtensions,
+  videoExtensions,
+} from "./utils/common";
 
 function App() {
   const fileSelected = useAppSelector((state) => state.files.selectedFileId);
-  const extensionFile = getExtensionFile(fileSelected)
-  const listBinaryFiles = imageExtensions.concat(videoExtensions, audioExtensions)
+  const extensionFile = getExtensionFile(fileSelected);
+  const listBinaryFiles = imageExtensions.concat(
+    videoExtensions,
+    audioExtensions
+  );
 
   return (
-    <div className={styles.layout}>
-      <div className={styles.toolbars}><Toolbars /></div>
-      <div className={styles.tabs}><Tabs /></div>
-      <div className={styles.treeView}><Tree /></div>
-      <div className={styles.editor}>
-        {
-          listBinaryFiles.includes(extensionFile) ? <BinaryFile /> : <MonacoEditor />
-        }
+    <div className={styles.container}>
+      <div className={styles.title}>Code Editor with Zip File Handling Web App</div>
+      <div className={styles.layout}>
+        <div className={styles.toolbars}>
+          <Toolbars />
+        </div>
+        <div className={styles.tabs}>
+          <Tabs />
+        </div>
+        <div className={styles.treeView}>
+          <Tree />
+        </div>
+        <div className={styles.editor}>
+          {listBinaryFiles.includes(extensionFile) ? (
+            <BinaryFile />
+          ) : (
+            <MonacoEditor />
+          )}
+        </div>
       </div>
     </div>
   );
